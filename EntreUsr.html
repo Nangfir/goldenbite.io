@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhotoBox User</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .container {
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      width: 300px;
+      text-align: center;
+    }
+
+    .container h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+    <div name="submit-to-google-sheet" class="container">
+    <h2>GET YOUR PHOTO</h2>
+    <input type="number" id="sch" placeholder="Enter Your Code" required>
+    <button onclick="cari()" type="submit">Search</button>
+    </div>
+
+  <script>
+      async function cari(){
+        try{
+            const response = await fetch('https://script.googleusercontent.com/macros/echo?user_content_key=AehSKLjOK27MIBrNhYoyY_QYYZpgO6vnuTLCyjipiJ396IJQrmxf7ySBbAXezoZe9K6-lgzLppS2fB3HkWD3SavXvHFDkHfsDc-SKzssFADXnexRPFE1XweIpwhiKcChk8uuXxMiSBchUebamkUYLQc64iPFQWmWiyqGmW8H0xYP6qvk_3X6YzNWiWwxrnGWngFCF0x29GCMbVznUN8I2wirXOznafbtKpNwqzpKm78Glf6hYfn166mcZHUsdwbVKzOiIUiI0IujrAfn3pgCjef7Y801pS7m1RhDFVLzNBPR&lib=Mx7cqjXWS1Iq40F8BjsT0M3rSaIiOLSB8');
+            const data = await response.json();
+            const users = data.data;
+            let ambil = document.getElementById('sch').value;
+
+            const temu = users.find(user => user.email == ambil)
+            console.log(temu)
+            console.log(temu.link)
+            const link = temu.link
+            window.open(link,"_blank");
+        } catch (error) {
+            console.log('gagal:', error)
+        }
+       
+       }
+
+     
+  </script>
+
+</body>
+</html>
